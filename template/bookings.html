@@ -1,0 +1,37 @@
+<div class="court court_<%=courtID%>" style="<%if(courtID!='F1')print('display:none;');%>">
+<%
+  bookings = _.filter(bookings, function(f){
+    return(f.slotCourtID==courtID);
+  });
+
+  var dtList = _.map(bookings, function(b){
+    return(b.slotDate);
+  });
+  dtList = _.uniq(dtList);
+  console.log(dtList);
+%>
+<%
+  _.each(dtList, function(d){
+%>
+  <h4 style="text-align:center;"><%=d%></h4>
+
+  <ul class="list-group">
+    <%
+    var thisDayBookings = _.filter(bookings, function(b){
+      return(b.slotDate==d);
+    });
+    _.each(thisDayBookings, function(b){
+    %>
+    <li class="list-group-item">
+      <span class="pull-right"><%=b.slotContent%></span>
+      <%=b.slotTime%>
+    </li>
+    <%
+    })
+    %>
+  </ul>
+
+<%
+  });
+%>
+</div>
