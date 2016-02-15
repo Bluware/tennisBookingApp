@@ -25,7 +25,10 @@ var findBookings = function(mongoDBConnection, callback) {
     assert.equal(null, err);
     console.log("Connected correctly to tennisApp mongodb.");
 
-    db.collection('bookings').find().toArray(function(err, results){
+    var cursor = db.collection('bookings').find();
+    cursor.sort([['slotDt', 'asc'],['slotTime','asc']]);
+
+    cursor.toArray(function(err, results){
      //console.log(results);
      db.close();
      callback(results);
