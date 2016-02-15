@@ -98,7 +98,9 @@ _.extend( tennisAppScraper.prototype, {
                 MongoClient.connect(url, function(err, db) {
                   assert.equal(null, err);
                   console.log("Connected correctly to tennisApp mongodb.");
-
+                  courtBookingArr = _.sortBy(courtBookingArr, function(f){
+                    return([f.slotDt, f.slotTime]);
+                  });
                   // var insertDocument = function(db) {
                      db.collection('bookings').deleteMany({}, function(err, results){
                        console.log('REMOVED ALL BOOKINGS', err)
@@ -155,7 +157,8 @@ _.extend( tennisAppScraper.prototype, {
               slotTime:slotTime,
               slotCourtID:slotCourtID,
               slotContent:slotContent,
-              slotClass:slotClass
+              slotClass:slotClass,
+              slotDt:slotArr[0]
             }
             courtBookingArr.push(slot);
           }
